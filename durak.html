@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дурак - Компания Махмудовкино</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color:white;
+  font-family: 'Arial', sans-serif;
+  text-align:center;
+  margin:0;
+  padding:10px;
+  min-height:100vh;
+}
+h1 { color: #FFD700; text-shadow: 0 0 10px #FFD700; }
+.info { background:rgba(0,0,0,0.5); padding:10px; border-radius:10px; margin:10px auto; max-width:400px; }
+.card {
+  display:inline-block;
+  width:55px;
+  height:80px;
+  background:linear-gradient(to bottom, white, #eee);
+  color:black;
+  border-radius:8px;
+  margin:3px;
+  padding-top:5px;
+  font-weight:bold;
+  font-size:15px;
+  cursor:pointer;
+  border:2px solid #333;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition:0.2s;
+}
+.card:hover { transform: translateY(-8px); border-color: #FFD700; }
+.red { color:#D32F2F; }
+#table {
+  min-height:120px;
+  border:3px dashed #FFD700;
+  margin:15px auto;
+  padding:10px;
+  background:rgba(0,0,0,0.4);
+  border-radius:15px;
+  max-width:90%;
+}
+button {
+  padding:12px 25px;
+  font-size:16px;
+  margin:10px;
+  background:linear-gradient(to right, #FFD700, #FFA000);
+  color:black;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  font-weight:bold;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+button:hover { transform: scale(1.05); }
+.back { color:#FFD700; display:block; margin-top:20px; text-decoration:none; }
+.bot-card { display:inline-block; width:30px; height:45px; background:blue; border-radius:5px; margin:2px; }
+</style>
+</head>
+<body>
+<h1>♠️ ДУРАК ПОДКИДНОЙ ♣️</h1>
+
+<div class="info">
+  <b>Козырь:</b> <span id="trump">-</span> |
+  <b>В колоде:</b> <span id="deckCount">36</span>
+</div>
+<p id="status">Нажми "Новая игра"</p>
+
+<button onclick="startGame()">🎲 Новая игра</button>
+<button onclick="takeCards()" id="takeBtn" style="display:none; background:red; color:white;">Взять</button>
+<button onclick="endTurn()" id="endBtn" style="display:none;">Бито</button>
+
+<h2>Стол:</h2>
+<div id="table">Пусто</div>
+
+<h2>Твои карты:</h2>
+<div id="player"></div>
+
+<h2>Карты бота: <span id="botCount">0</span></h2>
+<div id="bot"></div>
+
+<a href="index.html" class="back">← Назад в Компания Махмудовкино</a>
+
+<script>
+let deck=[], player=[], bot=[], trump, table=[], attacking=true;
+const suits=['♠','♥','♦','♣'];
+const suitNames={'♠':'пик','♥':'червей','♦':'бубен','♣':'крестей'};
+const values=['6','7','8','9','10','J','Q','K','A'];
+const valueOrder={'6':0,'7':1,'8':2,'9':3,'10':4,'J':5,'Q':6,'K':7,'A':8};
+
+function createDeck(){
+  deck=[];
+  for(let s of suits) for(let v of values) deck.push(v+s);
+  deck.sort(()=>Math.random()-0.5);
+}
+
+function getValue(card){ return valueOrder[card.slice(0,-1)]; }
+function getSuit(card){ return card.slice(-1); }
+function isTrump(card){ return getSuit(card)===trump; }
+function canBeat(def, att){
+  if(isTrump(def) &&!isTrump(att)) return true;
+  if(getSuit(def)===getSuit(att) && getValue(def)>getValue(att)) return true;
+  return false;
+}
+
+function draw(n, to){
+  for(let i=0;i<n;i++) if(deck.length) to.push(deck.pop());
+}
+
+function showCards(){
+  let html='';
+  player.forEach((c,i)=>{
+    let color = (c.includes('♥')||c.includes('♦'))?'red':'';
+    html += `<div class="card ${color}" onclick="playerMove(${i})">${c}</div>`;
+  });
+  document.getElementById('player').innerHTML=html;
+
+  let botHtml='';
+  for(let i=0;i<bot.length;i++) botHtml+='<div class="bot-card"></div>';
+  document.getElementById('bot').innerHTML=botHtml;
+
+  document.getElementById('botCount').innerText=bot.length;
+  document.getElementById('deckCount').innerText=deck.length;
+  document.getElementById('table').innerHTML=table.length?table.map(c=>{
+    let color = (c.includes('♥')||c.includes('♦'))?'red':'';
+    return `<span class="card ${color}">${c}</span>`;
+  }).join(''):'Пусто';
+}
+
+function startGame(){
+  createDeck();
+  player=[]; bot=[]; table=[]; attacking=true;
+  draw(6,player); draw(6,bot);
+  trump=getSuit(deck[deck.length-1]);
+  document.getElementById('trump').innerText=trump+' '+suitNames[trump];
+  document.getElementById('status').innerText='Твой ход. Атакуй!';
+  document.getElementById('takeBtn').style.display='none';
+  document.getElementById('endBtn').style.display='none';
+  showCards();
+}
+
+function playerMove(i){
+  let card = player[i];
+  if(attacking){
+    table.push(card);
+    player.splice(i,1);
+    attacking=false;
+    document.getElementById('status').innerText='Ход бота. Он отбивается...';
+    document.getElementById('endBtn').style.display='inline-block';
+    showCards();
+    setTimeout(botDefend,1000);
+  }
+}
+
+function botDefend(){
+  let lastCard = table[table.length-1];
+  let defendCard = bot.find(c=>canBeat(c,lastCard));
+  if(defendCard){
+    table.push(defendCard);
+    bot.splice(bot.indexOf(defendCard),1);
+    document.getElementById('status').innerText='Бот отбился! Твой ход.';
+  } else {
+    document.getElementById('status').innerText='Бот не может отбиться. Бери карты!';
+    document.getElementById('takeBtn').style.display='inline-block';
+  }
+  showCards();
+}
+
+function takeCards(){
+  player.push(...table);
+  table=[];
+  attacking=true;
+  document.getElementById('takeBtn').style.display='none';
+  document.getElementById('endBtn').style.display='none';
+  document.getElementById('status').innerText='Ты взял. Добор карт...';
+  refill();
+}
+
+function endTurn(){
+  table=[];
+  attacking=true;
+  document.getElementById('takeBtn').style.display='none';
+  document.getElementById('endBtn').style.display='none';
+  document.getElementById('status').innerText='Бито! Добор карт...';
+  refill();
+}
+
+function refill(){
+  draw(6-player.length, player);
+  draw(6-bot.length, bot);
+  showCards();
+  if(player.length===0) alert('Ты выиграл!');
+  if(bot.length===0) alert('Бот выиграл!');
+}
+
+startGame();
+</script>
+</body>
+</html>
