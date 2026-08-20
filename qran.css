@@ -1,0 +1,203 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            #101812,
+            #1d2a20
+        );
+
+    color: #eee;
+
+    font-family:
+        Georgia,
+        serif;
+
+    min-height: 100vh;
+
+}
+
+
+header {
+
+    text-align: center;
+
+    padding: 30px 15px;
+
+}
+
+header h1 {
+
+    margin: 0;
+
+    font-size: 30px;
+
+    color: #e5cf91;
+
+}
+
+header p {
+
+    font-size: 25px;
+
+    color: #e5cf91;
+
+}
+
+
+.book {
+
+    width: 92%;
+
+    max-width: 850px;
+
+    margin: auto;
+
+    background: #fffdf4;
+
+    color: #222;
+
+    min-height: 70vh;
+
+    border-radius: 12px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.4);
+
+}
+
+
+.book-title {
+
+    text-align: center;
+
+    padding-bottom: 25px;
+
+    border-bottom:
+        1px solid #d5c7a2;
+
+}
+
+.book-title h2 {
+
+    font-size: 32px;
+
+}
+
+.book-title p:first-of-type {
+
+    direction: rtl;
+
+    font-size: 35px;
+
+    line-height: 2;
+
+    color: #806b36;
+
+}
+
+
+.surah {
+
+    padding: 20px;
+
+    margin: 12px 0;
+
+    border:
+        1px solid #d8ccb0;
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.surah:hover {
+
+    transform:
+        translateY(-2px);
+
+    background: #f4efdf;
+
+}
+
+
+.surah-name {
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+}
+
+.surah-number {
+
+    color: #806b36;
+
+}
+
+
+.navigation {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 30px;
+
+}
+
+
+button {
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 12px 20px;
+
+    background: #806b36;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+button:hover {
+
+    background: #5e4c23;
+
+}
+
+
+@media(max-width:600px) {
+
+    .book {
+
+        padding: 20px;
+
+    }
+
+    header h1 {
+
+        font-size: 23px;
+
+    }
+
+  }
