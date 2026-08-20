@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahmudov Money</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="game">
+
+    <header class="topbar">
+        <div class="logo">
+            <span>₽</span> Mahmudov Money
+        </div>
+
+        <div class="player-info">
+            <div>Уровень <b id="level">1</b></div>
+            <div class="money">
+                ₽ <b id="money">1000</b>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ГЛАВНОЕ МЕНЮ -->
+
+        <section id="menu" class="screen active">
+
+            <div class="hero">
+
+                <div class="hero-badge">
+                    MAHMUDOV GAME STUDIO
+                </div>
+
+                <h1>
+                    Mahmudov<br>
+                    <span>Money</span>
+                </h1>
+
+                <p>
+                    Рискни. Подними ставку.
+                    Забери банк.
+                </p>
+
+                <button class="main-button" onclick="openStages()">
+                    ИГРАТЬ
+                </button>
+
+            </div>
+
+            <div class="menu-cards">
+
+                <div class="menu-card">
+                    <div class="icon">🏆</div>
+                    <h3>Карьера</h3>
+                    <p>
+                        12 соперников от новичка
+                        до легендарного босса.
+                    </p>
+                </div>
+
+                <div class="menu-card">
+                    <div class="icon">💰</div>
+                    <h3>Деньги</h3>
+                    <p>
+                        Побеждай, зарабатывай
+                        и открывай новые этапы.
+                    </p>
+                </div>
+
+                <div class="menu-card">
+                    <div class="icon">⭐</div>
+                    <h3>Уровни</h3>
+                    <p>
+                        Получай XP и повышай
+                        свой уровень.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ЭТАПЫ -->
+
+        <section id="stages" class="screen">
+
+            <div class="section-title">
+
+                <button class="back"
+                        onclick="showScreen('menu')">
+                    ←
+                </button>
+
+                <div>
+                    <small>КАРЬЕРА</small>
+                    <h2>Выбери соперника</h2>
+                </div>
+
+            </div>
+
+            <div id="opponents" class="opponents"></div>
+
+        </section>
+
+
+        <!-- ИГРА -->
+
+        <section id="gameScreen" class="screen">
+
+            <div class="game-header">
+
+                <button class="back"
+                        onclick="openStages()">
+                    ←
+                </button>
+
+                <div>
+                    <small>
+                        ЭТАП <span id="stageNumber">1</span>
+                    </small>
+
+                    <h2 id="opponentName">
+                        Петя Новичок
+                    </h2>
+                </div>
+
+                <div class="bank">
+                    БАНК
+                    <strong>
+                        ₽ <span id="pot">0</span>
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="table">
+
+                <!-- СОПЕРНИК -->
+
+                <div class="opponent">
+
+                    <div class="character"
+                         id="characterFace">
+                        😎
+                    </div>
+
+                    <div class="opponent-info">
+
+                        <h2 id="opponentTitle">
+                            Петя Новичок
+                        </h2>
+
+                        <div class="chips">
+                            ₽
+                            <b id="opponentMoney">
+                                3000
+                            </b>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ДИАЛОГ -->
+
+                <div class="speech">
+
+                    <span id="dialogue">
+                        Ставка 200₽. Играем?
+                    </span>
+
+                </div>
+
+
+                <!-- КАРТЫ -->
+
+                <div class="cards">
+
+                    <div class="card hidden-card">?</div>
+                    <div class="card hidden-card">?</div>
+                    <div class="card hidden-card">?</div>
+
+                </div>
+
+
+                <!-- ИГРОК -->
+
+                <div class="player">
+
+                    <div class="player-avatar">
+                        👑
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Mahmudov
+                        </h2>
+
+                        <div class="chips">
+                            ₽
+                            <b id="playerMoney">
+                                1000
+                            </b>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- КНОПКИ -->
+
+            <div class="action-area">
+
+                <div class="current-bet">
+
+                    Ставка соперника:
+
+                    <strong>
+                        ₽ <span id="currentBet">200</span>
+                    </strong>
+
+                </div>
+
+                <div class="actions">
+
+                    <button class="action call"
+                            onclick="callBet()">
+
+                        <span>✓</span>
+
+                        ИГРАЕМ
+
+                        <small>
+                            Принять ставку
+                        </small>
+
+                    </button>
+
+
+                    <button class="action raise"
+                            onclick="doubleBet()">
+
+                        <span>×2</span>
+
+                        УДВОИТЬ
+
+                        <small>
+                            Повысить ставку
+                        </small>
+
+                    </button>
+
+
+                    <button class="action triple"
+                            onclick="tripleBet()">
+
+                        <span>×3</span>
+
+                        ВТРОЕ
+
+                        <small>
+                            Большой риск
+                        </small>
+
+                    </button>
+
+
+                    <button class="action fold"
+                            onclick="foldGame()">
+
+                        <span>✕</span>
+
+                        СБРОСИТЬ
+
+                        <small>
+                            Отказаться
+                        </small>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- МАГАЗИН -->
+
+        <section id="shop" class="screen">
+
+            <div class="section-title">
+
+                <button class="back"
+                        onclick="showScreen('menu')">
+                    ←
+                </button>
+
+                <div>
+
+                    <small>МАГАЗИН</small>
+
+                    <h2>
+                        Mahmudov Shop
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="shop-items">
+
+                <div class="shop-item">
+
+                    <div class="shop-preview gold">
+                        ₽
+                    </div>
+
+                    <h3>
+                        Золотой стол
+                    </h3>
+
+                    <p>
+                        Премиальное оформление.
+                    </p>
+
+                    <button onclick="buyItem(1,500)">
+                        ₽ 500
+                    </button>
+
+                </div>
+
+
+                <div class="shop-item">
+
+                    <div class="shop-preview purple">
+                        ♠
+                    </div>
+
+                    <h3>
+                        Фиолетовый стол
+                    </h3>
+
+                    <p>
+                        Для особых игроков.
+                    </p>
+
+                    <button onclick="buyItem(2,1000)">
+                        ₽ 1000
+                    </button>
+
+                </div>
+
+
+                <div class="shop-item">
+
+                    <div class="shop-preview red">
+                        ★
+                    </div>
+
+                    <h3>
+                        Стол босса
+                    </h3>
+
+                    <p>
+                        Для настоящего босса.
+                    </p>
+
+                    <button onclick="buyItem(3,2500)">
+                        ₽ 2500
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- НИЖНЕЕ МЕНЮ -->
+
+    <nav class="navigation">
+
+        <button onclick="showScreen('menu')">
+            <span>⌂</span>
+            Главная
+        </button>
+
+        <button onclick="openStages()">
+            <span>♛</span>
+            Карьера
+        </button>
+
+        <button onclick="showScreen('shop')">
+            <span>₽</span>
+            Магазин
+        </button>
+
+    </nav>
+
+</div>
+
+
+<div id="notification"
+     class="notification">
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+  </html>
