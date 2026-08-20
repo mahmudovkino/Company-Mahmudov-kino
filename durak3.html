@@ -2,39 +2,95 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>Дурак: Битва за Махмудовкино</title>
+<title>Битва за Махмудовкино</title>
 <style>
-body { margin:0; background:#87CEEB; font-family:sans-serif; }
-#map { width:100%; height:70vh; background:lightgreen; position:relative; }
-.location { position:absolute; width:70px; height:70px; background:white; border:3px solid black; 
-            border-radius:15px; text-align:center; font-size:30px; cursor:pointer; }
-.badge { background:yellow; border-radius:50%; padding:2px 6px; position:absolute; bottom:0; right:0; }
-#game { height:30vh; background:#8B4513; display:flex; justify-content:space-around; align-items:center; }
-.char { text-align:center; color:white; }
-.avatar { width:80px; height:100px; background:gold; border-radius:15px; font-size:50px; line-height:100px; }
-.table { width:45%; height:90%; background:#DEB887; border:8px solid #5D3A1A; border-radius:20px; }
-.card { width:42px; height:62px; background:white; border:1px solid black; display:inline-block; margin:2px; }
-.red { color:red; }
+body {margin:0; background:#0a3d0a; color:white; font-family:sans-serif; overflow:hidden;}
+#map {width:100%; height:30vh; background:#228B22; position:relative;}
+.location {width:20px; height:20px; background:yellow; border-radius:50%; position:absolute; border:2px solid black;}
+#game {height:70vh; background:#006400; display:flex; flex-direction:column; justify-content:space-between; padding:10px;}
+.char {display:flex; align-items:center; gap:10px;}
+.avatar {font-size:40px;}
+#table {background:#004d00; height:200px; border-radius:10px; display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:5px; padding:10px;}
+.card {width:50px; height:70px; background:white; color:black; border-radius:5px; display:flex; justify-content:center; align-items:center; font-size:20px; font-weight:bold; cursor:pointer; border:2px solid black;}
+#hand {display:flex; gap:5px; justify-content:center; flex-wrap:wrap;}
+#buttons {display:flex; justify-content:center; gap:10px;}
+.btn {padding:12px 25px; font-size:18px; border:none; border-radius:8px; cursor:pointer; font-weight:bold;}
+#take {background:red; color:white;}
+#beat {background:lime; color:black;}
+#pass {background:yellow; color:black;}
+#info {text-align:center; font-size:20px; padding:5px;}
 </style>
 </head>
 <body>
 
 <div id="map">
-  <div class="location" style="top:5%; left:10%;" onclick="alert('Игра с Бабкой!')">🏠<div class="badge">10</div></div>
-  <div class="location" style="top:5%; left:70%;" onclick="alert('Игра с Царем!')">🏰<div class="badge">3</div></div>
-  <div class="location" style="top:65%; left:80%;" onclick="alert('Игра с Комиком!')">🎤<div class="badge">3</div></div>
+  <div class="location" style="top:5%; left:10%;"></div>
+  <div class="location" style="top:5%; left:70%;"></div>
+  <div class="location" style="top:65%; left:80%;"></div>
 </div>
 
 <div id="game">
-  <div class="char"><div class="avatar">👑</div><div>Ты</div></div>
-  <div class="table"><div id="tableCards"></div></div>
-  <div class="char"><div class="avatar">👵</div><div>Бабка</div></div>
+  <div class="char"><div class="avatar">👨‍🦳</div><div>Бабка Зина</div></div>
+
+  <div id="info">Твой ход</div>
+  <div id="table"></div>
+
+  <div id="hand"></div>
+
+  <div id="buttons">
+    <button id="take" class="btn" onclick="takeCards()">БЕРУ</button>
+    <button id="beat" class="btn" onclick="beat()">БИТО</button>
+    <button id="pass" class="btn" onclick="pass()">ХОД</button>
+  </div>
+
+  <div class="char"><div class="avatar">😎</div><div>Ты</div></div>
 </div>
 
-<a href="index.html" style="color:yellow; position:absolute; bottom:10px; left:50%;">← Меню</a>
+<a href="index.html" style="color:yellow; position:absolute; top:10px; left:10px;">Назад</a>
 
 <script>
-alert('Файл durak3.html создан! Это база. Потом добавим карты.')
+let suits = ['♠','♣','♦','♥'];
+let values = ['6','7','8','9','10','В','Д','К','Т'];
+let deck = [];
+for(let s of suits) for(let v of values) deck.push(v+s);
+deck.sort(() => Math.random() - 0.5);
+
+let playerHand = deck.splice(0,6);
+let botHand = deck.splice(0,6);
+let tableCards = [];
+let trump = deck[deck.length-1][1]; // последняя карта козырь
+
+function update(){
+  document.getElementById("hand").innerHTML = "";
+  playerHand.forEach((card,i) => {
+    document.getElementById("hand").innerHTML += `<div class="card" onclick="playCard(${i})">${card}</div>`;
+  });
+  document.getElementById("table").innerHTML = "";
+  tableCards.forEach(card => {
+    document.getElementById("table").innerHTML += `<div class="card">${card}</div>`;
+  });
+  document.getElementById("info").innerText = `Козырь: ${trump} | В колоде: ${deck.length}`;
+}
+function playCard(i){
+  tableCards.push(playerHand.splice(i,1)[0]);
+  update();
+}
+function takeCards(){
+  playerHand.push(...tableCards);
+  tableCards = [];
+  update();
+}
+function beat(){
+  alert("Бито! Бабка забирает.");
+  tableCards = [];
+  update();
+}
+function pass(){
+  alert("Ход передан Бабке");
+  update();
+}
+
+update(); // запуск
 </script>
 </body>
-    </html>
+            </html>
