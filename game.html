@@ -425,3 +425,328 @@
 
 </body>
   </html>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mahmudov Money: Street Tycoon</title>
+
+    <link rel="stylesheet" href="street-tycoon.css">
+</head>
+
+<body>
+
+<div class="game">
+
+    <!-- ШАПКА -->
+
+    <header class="top">
+
+        <div class="brand">
+            <div class="brand-icon">₽</div>
+
+            <div>
+                <h1>Mahmudov Money</h1>
+                <span>STREET TYCOON</span>
+            </div>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <small>ДЕНЬГИ</small>
+                <b>₽ <span id="money">1000</span></b>
+            </div>
+
+            <div class="stat">
+                <small>ДЕНЬ</small>
+                <b id="day">1</b>
+            </div>
+
+            <div class="stat">
+                <small>XP</small>
+                <b id="xp">0</b>
+            </div>
+
+            <div class="stat">
+                <small>УРОВЕНЬ</small>
+                <b id="level">1</b>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ОСНОВНОЙ ЭКРАН -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <span class="badge">
+                    НОВЫЙ БИЗНЕС
+                </span>
+
+                <h2>
+                    Построй свою
+                    <span>империю</span>
+                </h2>
+
+                <p>
+                    Начни с маленького магазина,
+                    заработай первые деньги и преврати
+                    одну улицу в огромную бизнес-империю.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- БИЗНЕСЫ -->
+
+        <section>
+
+            <div class="section-title">
+
+                <div>
+                    <small>ТВОИ ОБЪЕКТЫ</small>
+                    <h2>Бизнес</h2>
+                </div>
+
+            </div>
+
+            <div id="businesses"
+                 class="businesses">
+            </div>
+
+        </section>
+
+
+        <!-- СОБЫТИЕ -->
+
+        <section class="event-box">
+
+            <div class="event-icon">
+                ⚡
+            </div>
+
+            <div>
+
+                <small>
+                    СЛУЧАЙНОЕ СОБЫТИЕ
+                </small>
+
+                <h3 id="eventTitle">
+                    Добро пожаловать!
+                </h3>
+
+                <p id="eventText">
+                    Твой бизнес только начинается.
+                </p>
+
+            </div>
+
+            <button
+                id="eventButton"
+                onclick="handleEvent()">
+
+                НАЧАТЬ ДЕНЬ
+
+            </button>
+
+        </section>
+
+
+        <!-- КОНКУРЕНТ -->
+
+        <section class="competitor">
+
+            <div class="competitor-avatar">
+                🕶️
+            </div>
+
+            <div class="competitor-info">
+
+                <small>
+                    ТВОЙ КОНКУРЕНТ
+                </small>
+
+                <h2>
+                    Рустам Бизнесмен
+                </h2>
+
+                <p id="competitorText">
+                    «Посмотрим, кто заработает больше.»
+                </p>
+
+            </div>
+
+            <div class="competitor-money">
+
+                <small>
+                    ЕГО КАПИТАЛ
+                </small>
+
+                <b>
+                    ₽ <span id="competitorMoney">
+                        2500
+                    </span>
+                </b>
+
+            </div>
+
+        </section>
+
+
+        <!-- МАГАЗИН -->
+
+        <section>
+
+            <div class="section-title">
+
+                <div>
+                    <small>УЛУЧШЕНИЯ</small>
+                    <h2>Магазин</h2>
+                </div>
+
+            </div>
+
+            <div class="shop">
+
+                <div class="shop-card">
+
+                    <div class="shop-icon">
+                        📢
+                    </div>
+
+                    <h3>
+                        Реклама
+                    </h3>
+
+                    <p>
+                        Увеличивает ежедневную прибыль.
+                    </p>
+
+                    <button
+                        onclick="buyUpgrade('advertising')">
+
+                        Купить · ₽500
+
+                    </button>
+
+                </div>
+
+
+                <div class="shop-card">
+
+                    <div class="shop-icon">
+                        👨‍💼
+                    </div>
+
+                    <h3>
+                        Работник
+                    </h3>
+
+                    <p>
+                        Бизнес работает эффективнее.
+                    </p>
+
+                    <button
+                        onclick="buyUpgrade('worker')">
+
+                        Купить · ₽750
+
+                    </button>
+
+                </div>
+
+
+                <div class="shop-card">
+
+                    <div class="shop-icon">
+                        🏦
+                    </div>
+
+                    <h3>
+                        Безопасность
+                    </h3>
+
+                    <p>
+                        Защищает бизнес от неприятностей.
+                    </p>
+
+                    <button
+                        onclick="buyUpgrade('security')">
+
+                        Купить · ₽1000
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ЖУРНАЛ -->
+
+        <section class="log-section">
+
+            <div class="section-title">
+
+                <div>
+                    <small>ИСТОРИЯ</small>
+                    <h2>Новости улицы</h2>
+                </div>
+
+            </div>
+
+            <div id="log"
+                 class="log">
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- НИЖНЕЕ МЕНЮ -->
+
+    <nav class="bottom-nav">
+
+        <button onclick="scrollToTop()">
+            🏠
+            <span>Главная</span>
+        </button>
+
+        <button onclick="scrollToBusiness()">
+            🏪
+            <span>Бизнес</span>
+        </button>
+
+        <button onclick="scrollToShop()">
+            🛒
+            <span>Магазин</span>
+        </button>
+
+    </nav>
+
+</div>
+
+
+<div id="notification"
+     class="notification">
+</div>
+
+
+<script src="street-tycoon.js"></script>
+
+</body>
+</html>
