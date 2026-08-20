@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Абдукодир Муслим 🤍 | Коран</title>
+
+    <link rel="stylesheet" href="quran.css">
+</head>
+
+<body>
+
+<header class="top">
+
+    <div class="brand">
+        <div class="brand-name">Абдукодир Муслим 🤍</div>
+        <div class="brand-subtitle">القرآن الكريم</div>
+    </div>
+
+    <button id="themeButton" class="icon-button">
+        ☾
+    </button>
+
+</header>
+
+
+<main>
+
+    <!-- ОБЛОЖКА -->
+
+    <section id="cover" class="cover">
+
+        <div class="cover-decoration">
+            ۞
+        </div>
+
+        <h1>القرآن الكريم</h1>
+
+        <h2>Коран</h2>
+
+        <p>
+            Абдукодир Муслим 🤍
+        </p>
+
+        <button id="startButton" class="main-button">
+            📖 Начать чтение
+        </button>
+
+    </section>
+
+
+    <!-- КНИГА -->
+
+    <section id="book" class="book hidden">
+
+        <div class="book-header">
+
+            <button id="backButton">
+                ←
+            </button>
+
+            <div>
+                <strong id="surahName">
+                    Аль-Фатиха
+                </strong>
+
+                <small id="surahInfo">
+                    Сура 1
+                </small>
+            </div>
+
+            <button id="bookmarkButton">
+                ☆
+            </button>
+
+        </div>
+
+
+        <div class="page-area">
+
+            <article id="page" class="page">
+
+                <div class="page-number">
+                    1
+                </div>
+
+                <div
+                    id="arabicText"
+                    class="arabic"
+                    dir="rtl"
+                >
+                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                </div>
+
+                <div
+                    id="translation"
+                    class="translation"
+                >
+                    Во имя Аллаха, Милостивого, Милосердного.
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <div class="controls">
+
+            <button id="previousButton">
+                ← Назад
+            </button>
+
+            <span id="pageCounter">
+                1 / 1
+            </span>
+
+            <button id="nextButton">
+                Далее →
+            </button>
+
+        </div>
+
+
+        <div class="tools">
+
+            <button id="fontMinus">
+                A−
+            </button>
+
+            <button id="fontPlus">
+                A+
+            </button>
+
+            <button id="audioButton">
+                🔊
+            </button>
+
+            <button id="searchButton">
+                🔎
+            </button>
+
+            <button id="contentsButton">
+                ☰
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ОГЛАВЛЕНИЕ -->
+
+    <section id="contents" class="contents hidden">
+
+        <div class="contents-header">
+
+            <h2>Суры Корана</h2>
+
+            <button id="closeContents">
+                ✕
+            </button>
+
+        </div>
+
+        <input
+            id="searchInput"
+            type="search"
+            placeholder="Поиск суры..."
+        >
+
+        <div id="surahList"></div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        القرآن الكريم
+    </p>
+
+    <p>
+        Текст Корана должен использоваться без изменений.
+    </p>
+
+</footer>
+
+
+<script src="quran.js"></script>
+
+</body>
+          </html>
